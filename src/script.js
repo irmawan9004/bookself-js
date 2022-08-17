@@ -16,12 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
     loadDataFromStorage();
   }
 
-  const searchForm = document.getElementById("searchSubmit");
-  searchForm.addEventListener("click", function (event) {
+  const searchForm = document.getElementById("searchBook");
+  searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    console.log("contol");
+    searchBook();
+  });
 
-    const title = document.getElementById("searchBookTitle").value;
-    loadDataFromStorage(title);
+  const resetBtn = document.querySelector(".reset");
+  resetBtn.addEventListener("click", () => {
+    document.getElementById("searchBookTitle").value = "";
+    searchBook();
   });
 });
 
@@ -29,6 +34,14 @@ function addBook() {
   const bookTitle = document.getElementById("title").value;
   const bookWritter = document.getElementById("writter").value;
   const bookYear = document.getElementById("year").value;
+  const bookIsComplete = document.getElementById("inputBookIsComplete");
+  let bookStatus;
+
+  if (bookIsComplete.checked) {
+    bookStatus = true;
+  } else {
+    bookStatus = false;
+  }
 
   const generatedID = generateId();
   const bookObject = generateBookObject(
@@ -36,7 +49,7 @@ function addBook() {
     bookTitle,
     bookWritter,
     bookYear,
-    false
+    bookStatus
   );
   bookself.push(bookObject);
 
@@ -60,6 +73,7 @@ function generateBookObject(id, bookTitle, bookWritter, bookYear, isCompleted) {
 
 function makeTodo(bookObject) {
   const bookTitle = document.createElement("h2");
+  bookTitle.classList.add("item-title");
   bookTitle.innerText = bookObject.bookTitle;
 
   const bookWritter = document.createElement("p");
@@ -208,3 +222,19 @@ function loadDataFromStorage() {
 
   document.dispatchEvent(new Event(RENDER_EVENT));
 }
+
+const searchBook = () => {
+  const searchInput = document
+    .getElementById("searchBookTitle")
+    .value.toLowerCase();
+  const bookItems = document.getElementsByClassName("item");
+
+  for (let i = 0; i < bookItems.length; i++) {
+    const itemTitle = bookItems[i].querySelector(".item-title");
+    if (itemTitle.textContent.toLowerCase().includes(searchInput)) {
+      bookItems[i].classList.remove("hidden");
+    } else {
+      bookItems[i].classList.add("hidden");
+    }
+  }
+};

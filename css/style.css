@@ -145,11 +145,16 @@ input[type="number"] {
   padding: 5px;
   border-radius: 3px;
 }
-
-.search > form > button {
+#reset {
+  background-color: rgb(209, 209, 209);
+  border: 1px solid black;
+  color: black;
+}
+.search > form > div > button {
   background-color: #343434;
   color: white;
   border: 0;
+  padding: 10px 50px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -157,6 +162,10 @@ input[type="number"] {
   color: #343434;
   font-weight: bold;
   margin-right: 10px;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .btn-submit:hover {
@@ -232,8 +241,12 @@ input[type="number"],
 }
 
 .list-book {
-  border: 2px solid black;
   border-radius: 8px;
+}
+
+.shadow {
+  border: 2px solid black;
+  margin-bottom: 2px;
 }
 
 @media only screen and (max-width: 1024px) {
